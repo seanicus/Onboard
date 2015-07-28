@@ -165,7 +165,8 @@
 		273D50A219A1A34F00E38DB2 = {
 			isa = PBXGroup;
 			children = (
-				273D50B419A1A34F00E38DB2 /* Onboard */,
+				273D50B419A1A34F00E38DB2 /* Source */,
+				275280F219A45909007FBD47 /* Demo */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,15 +192,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		273D50B419A1A34F00E38DB2 /* Onboard */ = {
+		273D50B419A1A34F00E38DB2 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				273D50DD19A1A49C00E38DB2 /* OnboardingViewController.h */,
 				273D50DE19A1A49C00E38DB2 /* OnboardingViewController.m */,
 				273D50E019A1A4BF00E38DB2 /* OnboardingContentViewController.h */,
 				273D50E119A1A4BF00E38DB2 /* OnboardingContentViewController.m */,
-				275280F219A45909007FBD47 /* Demo */,
 			);
+			name = Source;
 			path = Onboard;
 			sourceTree = "<group>";
 		};
@@ -257,6 +258,7 @@
 				270CB0B419BABF8C00F051B3 /* media */,
 			);
 			name = Demo;
+			path = Onboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
