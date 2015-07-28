@@ -7,11 +7,9 @@
 Onboard provides developers with a quick and easy means to create a beautiful, engaging, and useful onboarding experience with only a few lines of code.
 
 ![demo](Screenshots/city.gif)
-![demo](Screenshots/almanac.gif)
-![demo](Screenshots/solar.gif)
-![demo](Screenshots/waves.gif)
-![demo](Screenshots/gemr.gif)
-![demo](Screenshots/tripnary.gif)`
+
+#[Apps using Onboard and more samples](examples.md)
+=====
 
 
 Usage
@@ -25,13 +23,6 @@ Adding the following to your `Podfile` and running `pod install` should do the t
 pod 'Onboard'
 ```
 
-Manual
-------
-Drop the `OnboardingViewController` and `OnboardingContentViewController` header and implementation files into your project, import them into your AppDelegate, and you're ready to create an awesome onboarding experience for your users!
-
-
-How-To
--------
 
 Create individual pages by creating instances of `OnboardingContentViewController`. Provide a title, body, image, text for an action button, and within the action block handle whatever you want to do when the users press the button. If you don't want a button, you can leave both the button text and action handler nil.
 
@@ -149,35 +140,6 @@ Notes
 =====
 
 I'm not currently supporting landscape at the moment, so I would recommend either using this in an application that only supports portrait, or wrapping it in a subclassed UINavigationController that only supports portrait.
-
-Apps Using Onboard
-=============
-
-If your app is currently using onboard, let me know and I would love to feature it here!
-
-[Gemr](http://www.gemr.com/ "Gemr")
-===
-
-![demo](Screenshots/gemr1.PNG)
-
-[Tripnary](http://tripnary.com/ "Tripnary")
-===
-
-Thanks to [goelv](https://github.com/goelv) for this! You did a superb job!
-
-![demo](Screenshots/tripnary3.PNG)
-
-[Almanac - coming soon!](https://github.com/rldaulton)
-===
-
-![demo](Screenshots/almanac1.png)
-
-More Samples
-=============
-
-![demo](Screenshots/solar3.png)
-![demo](Screenshots/space2.png)
-![demo](Screenshots/purple4.png)
 
 
 Community
