@@ -20,12 +20,14 @@
     UILabel *_mainTextLabel;
     UILabel *_subTextLabel;
     UIButton *_actionButton;
+
+    BOOL _isSlideView;
 }
 
 @property (nonatomic) OnboardingViewController *delegate;
 
 @property (nonatomic) BOOL movesToNextViewController;
-
+@property (nonatomic) CGFloat horizontalPadding;//only used with slide view
 @property (nonatomic) CGFloat iconHeight;
 @property (nonatomic) CGFloat iconWidth;
 
@@ -57,7 +59,8 @@
 
 + (instancetype)contentWithTitle:(NSString *)title body:(NSString *)body image:(UIImage *)image buttonText:(NSString *)buttonText action:(dispatch_block_t)action;
 - (instancetype)initWithTitle:(NSString *)title body:(NSString *)body image:(UIImage *)image buttonText:(NSString *)buttonText action:(dispatch_block_t)action;
-
++ (instancetype)contentWithSlideImage:(UIImage*)image;
+- (instancetype)initWithSlideImage:(UIImage*)image;
 - (void)updateAlphas:(CGFloat)newAlpha;
 
 @end

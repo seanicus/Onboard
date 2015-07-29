@@ -23,7 +23,7 @@ static CGFloat const kDefaultUnderPageControlPadding = 0;
 static CGFloat const kDefaultTitleFontSize = 38;
 static CGFloat const kDefaultBodyFontSize = 28;
 static CGFloat const kDefaultButtonFontSize = 24;
-
+static CGFloat const kDefaultHorizontalPadding = 30;
 static CGFloat const kActionButtonHeight = 50;
 static CGFloat const kMainPageControlHeight = 35;
 
@@ -32,6 +32,37 @@ static CGFloat const kMainPageControlHeight = 35;
 @end
 
 @implementation OnboardingContentViewController
+
++ (instancetype)contentWithSlideImage:(UIImage *)image {
+    OnboardingContentViewController *contentVC = [[self alloc] initWithSlideImage:image];
+    return contentVC;
+}
+
+- (instancetype)initWithSlideImage:(UIImage *)image {
+    self = [super init];
+    _image = image;
+    // default icon properties
+    if(_image) {
+        self.iconHeight = _image.size.height;
+        self.iconWidth = _image.size.width;
+    } else {
+        self.iconHeight = kDefaultImageViewSize;
+        self.iconWidth = kDefaultImageViewSize;
+    }
+
+    _isSlideView = YES;
+
+    self.horizontalPadding = kDefaultHorizontalPadding;
+    self.topPadding = kDefaultTopPadding;
+    // default blocks
+    self.viewWillAppearBlock = ^{};
+    self.viewDidAppearBlock = ^{};
+    self.viewWillDisappearBlock = ^{};
+    self.viewDidDisappearBlock = ^{};
+
+    return self;
+}
+
 
 + (instancetype)contentWithTitle:(NSString *)title body:(NSString *)body image:(UIImage *)image buttonText:(NSString *)buttonText action:(dispatch_block_t)action {
     OnboardingContentViewController *contentVC = [[self alloc] initWithTitle:title body:body image:image buttonText:buttonText action:action];
@@ -102,7 +133,8 @@ static CGFloat const kMainPageControlHeight = 35;
     [super viewDidLoad];
     
     // now that the view has loaded we can generate the content
-    [self generateView];
+    //[self generateView];
+    _isSlideView ? [self generateSlideView] : [self generateView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,6 +195,47 @@ static CGFloat const kMainPageControlHeight = 35;
 
 - (void)setButtonActionHandler:(dispatch_block_t)action {
     _buttonActionHandler = action ?: ^{};
+}
+
+-(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width
+{
+    float oldWidth = sourceImage.size.width;
+    float scaleFactor = i_width / oldWidth;
+
+    float newHeight = sourceImage.size.height * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)generateSlideView{
+    // we want our background to be clear so we can see through it to the image provided
+    self.view.backgroundColor = [UIColor clearColor];
+
+    // do some calculation for some common values we'll need, namely the width of the view,
+    // the center of the width, and the content width we want to fill up, which is some
+    // fraction of the view width we set in the multipler constant
+    CGFloat viewWidth = CGRectGetWidth(self.view.frame);
+    CGFloat horizontalCenter = viewWidth / 2;
+    CGFloat contentWidth;
+
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        contentWidth = 640;
+    } else {
+        contentWidth = 320;
+    }
+
+
+    // create the image view with the appropriate image, size, and center in on screen
+    UIImage *scaledImage = [self imageWithImage:_image scaledToWidth:(contentWidth-_horizontalPadding)];
+    _imageView = [[UIImageView alloc] initWithImage:scaledImage];
+    CGRect frame = CGRectMake(horizontalCenter - ((self.view.frame.size.width-(_horizontalPadding))/2), self.topPadding, scaledImage.size.width, scaledImage.size.height);
+    [_imageView setFrame:frame];
+    [self.view addSubview:_imageView];
 }
 
 - (void)generateView {

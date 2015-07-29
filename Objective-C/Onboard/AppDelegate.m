@@ -30,11 +30,11 @@ static NSString * const kUserHasOnboardedKey = @"user_has_onboarded";
     
     // otherwise set the root view controller to the onboarding view controller
     else {
-        self.window.rootViewController = [self generateFirstDemoVC];
+//        self.window.rootViewController = [self generateFirstDemoVC];
 //        self.window.rootViewController = [self generateSecondDemoVC];
 //        self.window.rootViewController = [self generateThirdDemoVC];
 //        self.window.rootViewController = [self generateFourthDemoVC];
-        
+        self.window.rootViewController = [self generateSlideDemoVC];
 //        __weak typeof(self) weakSelf = self;
 //        
 //        self.window.rootViewController = [[MyOnboardingViewController alloc] initWithCompletionHandler:^{
@@ -79,10 +79,12 @@ static NSString * const kUserHasOnboardedKey = @"user_has_onboarded";
 }
 
 - (OnboardingViewController *)generateFirstDemoVC {
-    OnboardingContentViewController *firstPage = [OnboardingContentViewController contentWithTitle:@"What A Beautiful Photo" body:@"This city background image is so beautiful." image:[UIImage imageNamed:@"blue"] buttonText:@"Enable Location Services" action:^{
-        [[[UIAlertView alloc] initWithTitle:nil message:@"Here you can prompt users for various application permissions, providing them useful information about why you'd like those permissions to enhance their experience, increasing your chances they will grant those permissions." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }];
-    
+//    OnboardingContentViewController *firstPage = [OnboardingContentViewController contentWithTitle:@"What A Beautiful Photo" body:@"This city background image is so beautiful." image:[UIImage imageNamed:@"blue"] buttonText:@"Enable Location Services" action:^{
+//        [[[UIAlertView alloc] initWithTitle:nil message:@"Here you can prompt users for various application permissions, providing them useful information about why you'd like those permissions to enhance their experience, increasing your chances they will grant those permissions." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }];
+
+    OnboardingContentViewController *firstPage = [OnboardingContentViewController contentWithSlideImage:[UIImage imageNamed:@"draw1.jpg"]];
+
     OnboardingContentViewController *secondPage = [OnboardingContentViewController contentWithTitle:@"I'm so sorry" body:@"I can't get over the nice blurry background photo." image:[UIImage imageNamed:@"red"] buttonText:@"Connect With Facebook" action:^{
         [[[UIAlertView alloc] initWithTitle:nil message:@"Prompt users to do other cool things on startup. As you can see, hitting the action button on the prior page brought you automatically to the next page. Cool, huh?" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
@@ -192,6 +194,18 @@ static NSString * const kUserHasOnboardedKey = @"user_has_onboarded";
     onboardingVC.bodyTextColor = [UIColor colorWithRed:244/255.0 green:64/255.0 blue:40/255.0 alpha:1.0];
     onboardingVC.fontName = @"HelveticaNeue-Italic";
     return onboardingVC;
+}
+
+-(OnboardingViewController *)generateSlideDemoVC {
+    OnboardingContentViewController *firstPage = [OnboardingContentViewController contentWithSlideImage:[UIImage imageNamed:@"draw1.jpg"]];
+    OnboardingContentViewController *secondPage = [OnboardingContentViewController contentWithSlideImage:[UIImage imageNamed:@"draw2.jpg"]];
+    OnboardingContentViewController *thirdPage = [OnboardingContentViewController contentWithSlideImage:[UIImage imageNamed:@"draw3.jpg"]];
+
+    OnboardingViewController *onboardingVC = [[OnboardingViewController alloc] initWithBackgroundImage:[UIImage imageNamed:@"bluebkg.png"] contents:@[firstPage, secondPage, thirdPage]];
+    onboardingVC.shouldMaskBackground = NO;
+    onboardingVC.topPadding = 30;
+    return onboardingVC;
+
 }
 
 @end
